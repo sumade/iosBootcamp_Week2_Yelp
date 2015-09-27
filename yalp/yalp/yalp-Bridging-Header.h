@@ -8,5 +8,6 @@
 
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
 #endif  // __YALP_BRIDGING_HEADER_H__

@@ -7,22 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451EE3911BB7BCF8002C12EE /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451EE3901BB7BCF8002C12EE /* FilterViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		451EE3931BB7BD0E002C12EE /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451EE3921BB7BD0E002C12EE /* FilterTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		451EE3951BB7BD8A002C12EE /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451EE3941BB7BD8A002C12EE /* Filters.swift */; settings = {ASSET_TAGS = (); }; };
+		4539AA2E1BB8115800356FDC /* DropDownFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4539AA2D1BB8115800356FDC /* DropDownFilterTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		454F35261BB71D3C00E940AA /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F35251BB71D3C00E940AA /* Restaurant.swift */; settings = {ASSET_TAGS = (); }; };
+		454F35281BB71FBF00E940AA /* RestaurantListTableCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F35271BB71FBF00E940AA /* RestaurantListTableCellTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		4555744A1BB6847100560CD1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455574491BB6847100560CD1 /* AppDelegate.swift */; };
-		4555744C1BB6847100560CD1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555744B1BB6847100560CD1 /* ViewController.swift */; };
+		4555744C1BB6847100560CD1 /* RestaurantListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555744B1BB6847100560CD1 /* RestaurantListViewController.swift */; };
 		4555744F1BB6847100560CD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4555744D1BB6847100560CD1 /* Main.storyboard */; };
 		455574511BB6847100560CD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455574501BB6847100560CD1 /* Assets.xcassets */; };
 		455574541BB6847100560CD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 455574521BB6847100560CD1 /* LaunchScreen.storyboard */; };
 		4571FFB31BB693DD000FBF62 /* YalpVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4571FFB21BB693DD000FBF62 /* YalpVars.swift */; settings = {ASSET_TAGS = (); }; };
 		45D66C691BB6853D00519520 /* YalpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D66C681BB6853D00519520 /* YalpClient.swift */; settings = {ASSET_TAGS = (); }; };
+		45F60F9D1BB7E42E00CD1DF1 /* SectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F60F9C1BB7E42E00CD1DF1 /* SectionHeaderCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CFFFF22555970B9B90273185 /* Pods_yalp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0961D7DCE96F086223B06DC /* Pods_yalp.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		075064E89AC8A4C38B1F8A64 /* Pods-yalp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yalp.release.xcconfig"; path = "Pods/Target Support Files/Pods-yalp/Pods-yalp.release.xcconfig"; sourceTree = "<group>"; };
 		411650E8977024DBC583DAC6 /* Pods-yalp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yalp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-yalp/Pods-yalp.debug.xcconfig"; sourceTree = "<group>"; };
+		451EE3901BB7BCF8002C12EE /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		451EE3921BB7BD0E002C12EE /* FilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
+		451EE3941BB7BD8A002C12EE /* Filters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
+		4539AA2D1BB8115800356FDC /* DropDownFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownFilterTableViewCell.swift; sourceTree = "<group>"; };
+		454F35251BB71D3C00E940AA /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		454F35271BB71FBF00E940AA /* RestaurantListTableCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantListTableCellTableViewCell.swift; sourceTree = "<group>"; };
 		455574461BB6847100560CD1 /* yalp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yalp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		455574491BB6847100560CD1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4555744B1BB6847100560CD1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4555744B1BB6847100560CD1 /* RestaurantListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListViewController.swift; sourceTree = "<group>"; };
 		4555744E1BB6847100560CD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		455574501BB6847100560CD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		455574531BB6847100560CD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -30,6 +43,7 @@
 		4571FFB21BB693DD000FBF62 /* YalpVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YalpVars.swift; sourceTree = "<group>"; };
 		45D66C651BB6852E00519520 /* yalp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yalp-Bridging-Header.h"; sourceTree = "<group>"; };
 		45D66C681BB6853D00519520 /* YalpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YalpClient.swift; sourceTree = "<group>"; };
+		45F60F9C1BB7E42E00CD1DF1 /* SectionHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderCell.swift; sourceTree = "<group>"; };
 		E0961D7DCE96F086223B06DC /* Pods_yalp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yalp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -45,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		454F35241BB71D2600E940AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				454F35251BB71D3C00E940AA /* Restaurant.swift */,
+				451EE3941BB7BD8A002C12EE /* Filters.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		4555743D1BB6847100560CD1 = {
 			isa = PBXGroup;
 			children = (
@@ -66,9 +89,11 @@
 		455574481BB6847100560CD1 /* yalp */ = {
 			isa = PBXGroup;
 			children = (
+				454F35241BB71D2600E940AA /* Models */,
+				45D874D21BB71B2600A1BC81 /* TableViewCells */,
+				45D874D11BB71B1E00A1BC81 /* ViewControllers */,
 				45D66C641BB6850D00519520 /* YalpClient */,
 				455574491BB6847100560CD1 /* AppDelegate.swift */,
-				4555744B1BB6847100560CD1 /* ViewController.swift */,
 				4555744D1BB6847100560CD1 /* Main.storyboard */,
 				455574501BB6847100560CD1 /* Assets.xcassets */,
 				455574521BB6847100560CD1 /* LaunchScreen.storyboard */,
@@ -85,6 +110,26 @@
 				4571FFB21BB693DD000FBF62 /* YalpVars.swift */,
 			);
 			name = YalpClient;
+			sourceTree = "<group>";
+		};
+		45D874D11BB71B1E00A1BC81 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4555744B1BB6847100560CD1 /* RestaurantListViewController.swift */,
+				451EE3901BB7BCF8002C12EE /* FilterViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		45D874D21BB71B2600A1BC81 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				454F35271BB71FBF00E940AA /* RestaurantListTableCellTableViewCell.swift */,
+				451EE3921BB7BD0E002C12EE /* FilterTableViewCell.swift */,
+				45F60F9C1BB7E42E00CD1DF1 /* SectionHeaderCell.swift */,
+				4539AA2D1BB8115800356FDC /* DropDownFilterTableViewCell.swift */,
+			);
+			name = TableViewCells;
 			sourceTree = "<group>";
 		};
 		6CD7A7ED4A74359A03839FA3 /* Pods */ = {
@@ -226,8 +271,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451EE3911BB7BCF8002C12EE /* FilterViewController.swift in Sources */,
+				454F35261BB71D3C00E940AA /* Restaurant.swift in Sources */,
+				4539AA2E1BB8115800356FDC /* DropDownFilterTableViewCell.swift in Sources */,
 				45D66C691BB6853D00519520 /* YalpClient.swift in Sources */,
-				4555744C1BB6847100560CD1 /* ViewController.swift in Sources */,
+				4555744C1BB6847100560CD1 /* RestaurantListViewController.swift in Sources */,
+				454F35281BB71FBF00E940AA /* RestaurantListTableCellTableViewCell.swift in Sources */,
+				451EE3931BB7BD0E002C12EE /* FilterTableViewCell.swift in Sources */,
+				45F60F9D1BB7E42E00CD1DF1 /* SectionHeaderCell.swift in Sources */,
+				451EE3951BB7BD8A002C12EE /* Filters.swift in Sources */,
 				4555744A1BB6847100560CD1 /* AppDelegate.swift in Sources */,
 				4571FFB31BB693DD000FBF62 /* YalpVars.swift in Sources */,
 			);

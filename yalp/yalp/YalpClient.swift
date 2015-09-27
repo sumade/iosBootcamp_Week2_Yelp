@@ -44,7 +44,7 @@ class YalpClient {
             }
         }
         
-        print("actual parameters: \(actualParams)")
+//        print("actual parameters: \(actualParams)")
         
         return oauthMgr.GET("search", parameters: actualParams, success: success, failure: failure)
     }

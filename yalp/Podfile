@@ -8,5 +8,6 @@ target 'yalp' do
 	pod 'AFNetworking'
 	pod 'BDBOAuth1Manager'
 	pod 'SwiftyJSON'
+	pod 'MBProgressHUD'
 end
 

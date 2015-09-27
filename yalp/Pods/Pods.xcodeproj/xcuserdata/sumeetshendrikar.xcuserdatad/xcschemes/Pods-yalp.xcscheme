@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6A1FE48458C0A48F49218CBB"
+               BlueprintIdentifier = "2C8D2D50C87BAABEDDF500E3"
                BuildableName = "Pods_yalp.framework"
                BlueprintName = "Pods-yalp"
                ReferencedContainer = "container:Pods.xcodeproj">
