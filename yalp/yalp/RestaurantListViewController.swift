@@ -28,11 +28,11 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     
     var restaurants : [Restaurant] = [] {
         didSet {
-            self.filteredRestaurants = restaurants
+            self.searchBarFilteredRestaurants = restaurants
         }
     }
     
-    var filteredRestaurants : [Restaurant] = [] {
+    var searchBarFilteredRestaurants : [Restaurant] = [] {
         didSet {
             self.restaurantTableView.reloadData()
         }
@@ -40,9 +40,17 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     
     var currentFilter : Filter.FilterSettings = Filter.FilterSettings() {
         didSet {
-            print("new filter!")
-            self.fetchData(currentFilter)
+//            print("new filter!")
+            self.fetchDataTask(currentFilter, newSearch: true)
         }
+    }
+    
+    var isFetchInProgress : Bool = false
+    var currentQueryRowIndex : Int = 0
+    var currentQueryTotalRowCount : Int = 0
+    
+    var inTheMiddleOfQuery : Bool {
+        return currentQueryTotalRowCount != 0
     }
 
     // MARK: UI Elements
@@ -93,12 +101,31 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
         
-        fetchData(nil)
+        fetchDataTask(nil, newSearch:true)
     }
 
     // MARK: data fetch
     
-    func fetchData(filter: Filter.FilterSettings?) {
+    // wrapper function that just calls the helper on a separate queue
+    func fetchData(filter: Filter.FilterSettings?, newSearch: Bool) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "getting fud..."
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            self.fetchDataTask(filter, newSearch: newSearch)
+        }
+        
+    }
+    
+    func fetchDataTask(filter: Filter.FilterSettings?, newSearch: Bool) {
+
+        if isFetchInProgress {
+//            print("fetch already in progress.")
+            return
+        }
+        isFetchInProgress = true
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "getting fud..."
 
         var parameters: Dictionary<String,String> = [:]
         
@@ -109,14 +136,9 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         }
         
         if let filter = filter {
-            print(filter)
+            //print(filter)
         
             // add category filters
-            let f1 = filter.selectedCategories.filter({ YalpVars.condensedCategories[$0.lowercaseString] != nil })
-            print(f1)
-            let f2 = f1.map{ YalpVars.condensedCategories[$0.lowercaseString]! }
-            print(f2)
-            
             let category_filters = filter.selectedCategories.filter({ YalpVars.condensedCategories[$0.lowercaseString] != nil })
                 .map{ YalpVars.condensedCategories[$0.lowercaseString]! }
             
@@ -160,18 +182,34 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         }
         */
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = "getting fud..."
-        self.restaurantTableView.alpha = 0.5
-
+        if newSearch {
+            self.currentQueryTotalRowCount = 0
+            self.currentQueryRowIndex = 0
+            self.restaurantTableView.alpha = 0.5
+        }
+        
+        if self.inTheMiddleOfQuery {
+            parameters["offset"] = String(self.currentQueryRowIndex)
+        }
+        
         
         // always searching for restaurnts
         self.yalpClient.searchWithTerm("restaurants", parameters: parameters,
             success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
                 let json = JSON(responseObject)
-                if let businesses = json["businesses"].array {
+                if let businesses = json["businesses"].array, let total=json["total"].int {
+                    let newSet = businesses.map{ Restaurant(dict: $0.dictionaryValue) }
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.restaurants = businesses.map{ Restaurant(dict: $0.dictionaryValue) }
+                        if !self.inTheMiddleOfQuery {
+                            print("resetting query!")
+                            self.currentQueryTotalRowCount = total
+                            self.currentQueryRowIndex = newSet.count
+                            self.restaurants = newSet
+                        }else{
+                            self.currentQueryRowIndex += newSet.count
+                            self.restaurants.appendContentsOf(newSet)
+                        }
+                        self.isFetchInProgress = false
                         self.restaurantTableView.alpha = 1.0
                         MBProgressHUD.hideHUDForView(self.view, animated: true)
                     })
@@ -195,15 +233,26 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredRestaurants.count
+        //return currentQueryTotalRowCount//searchBarFilteredRestaurants.count
+        return min(searchBarFilteredRestaurants.count, currentQueryRowIndex, currentQueryTotalRowCount)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = restaurantTableView.dequeueReusableCellWithIdentifier("RestaurantListTableCellTableViewCell", forIndexPath: indexPath) as! RestaurantListTableCellTableViewCell
         
-        cell.selectionStyle = .None
         
-        cell.restaurant = filteredRestaurants[indexPath.row]
+        // check if more data needs to be fetched
+        if currentQueryRowIndex < currentQueryTotalRowCount {
+            let limit = 0.75*Double(currentQueryRowIndex)
+            if indexPath.row >= Int(limit) {
+                // fetch when 75% is shown
+                fetchDataTask(currentFilter, newSearch:false)
+            }
+        }
+        
+        cell.selectionStyle = .None
+        cell.restaurant = searchBarFilteredRestaurants[indexPath.row]
+
         return cell
     }
     
@@ -215,10 +264,9 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     func updateSearchResultsForSearchController(searchController: UISearchController) {
        let searchText = searchController.searchBar.text
 
-        print("searchText = \(searchText)")
         if let text = searchText {
             if text.isEmpty {
-                filteredRestaurants = restaurants
+                searchBarFilteredRestaurants = restaurants
                 return
             }
         }
@@ -226,7 +274,7 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         if let searchWords = searchText?.componentsSeparatedByString(" ") {
             if searchWords.count > 0 {
                 // for each restaurant
-                filteredRestaurants = restaurants.filter({ (resto: Restaurant) -> Bool in
+                searchBarFilteredRestaurants = restaurants.filter({ (resto: Restaurant) -> Bool in
                     var result: Bool = false
                     
                     // for each search word, check if the search word is in the name of the restaurant
@@ -236,7 +284,6 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
                     result = result ||
                         searchWords.filter({ (word: String) -> Bool in
                             return resto.categories.filter({
-                                print("word is \(word) and category is \($0)")
                                 return $0.rangeOfString(word, options: .CaseInsensitiveSearch) != nil
                             }).count>0
                         }).count>0
@@ -288,6 +335,7 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         if let filter = filter {
             // new filter configured
             currentFilter = filter
+            restaurantTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
     }
 }
