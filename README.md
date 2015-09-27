@@ -45,9 +45,11 @@ Time spent: `20`
 ### Walkthrough
 
 General Walkthrough
+
 ![Video Walkthrough](yalp/YalpWalkthrough.gif)
 
 Walkthrough showing layout consistency as orientation changes
+
 ![Video Walkthrough](yalp/YalpWalkthrough_Orientation.gif)
 
 
