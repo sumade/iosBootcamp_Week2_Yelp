@@ -1,6 +1,6 @@
 ## Yelp
 
-This is a Yelp search app using the [Yelp API]
+This is a Yelp search app using the [Yelp API](https://www.yelp.com/developers/documentation/v2/search_api)
 
 Time spent: `20`
 
