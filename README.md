@@ -33,5 +33,8 @@ Time spent: `<Number of hours spent>`
 
 ![Video Walkthrough](...)
 
+### Credits
+confirm by Nikolay Necheuhin from the Noun Project
+expanding by ChangHoon Baek from the Noun Project
 
 
