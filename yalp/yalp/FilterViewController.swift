@@ -128,6 +128,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         // show "see all" cell
                         let cell = filterTableView.dequeueReusableCellWithIdentifier("DropDownFilterTableViewCell", forIndexPath: indexPath) as! DropDownFilterTableViewCell
                         cell.selectionLabel.text = "See All"
+                        cell.selectionLabel.alpha =  0.6
                         cell.selectionImage.image = UIImage(named: "expand")
                         returnCell = cell
                     }

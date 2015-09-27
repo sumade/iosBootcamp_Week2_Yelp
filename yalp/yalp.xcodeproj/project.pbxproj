@@ -17,7 +17,6 @@
 		4555744C1BB6847100560CD1 /* RestaurantListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4555744B1BB6847100560CD1 /* RestaurantListViewController.swift */; };
 		4555744F1BB6847100560CD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4555744D1BB6847100560CD1 /* Main.storyboard */; };
 		455574511BB6847100560CD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 455574501BB6847100560CD1 /* Assets.xcassets */; };
-		455574541BB6847100560CD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 455574521BB6847100560CD1 /* LaunchScreen.storyboard */; };
 		4571FFB31BB693DD000FBF62 /* YalpVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4571FFB21BB693DD000FBF62 /* YalpVars.swift */; settings = {ASSET_TAGS = (); }; };
 		45D66C691BB6853D00519520 /* YalpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D66C681BB6853D00519520 /* YalpClient.swift */; settings = {ASSET_TAGS = (); }; };
 		45F60F9D1BB7E42E00CD1DF1 /* SectionHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F60F9C1BB7E42E00CD1DF1 /* SectionHeaderCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -38,7 +37,6 @@
 		4555744B1BB6847100560CD1 /* RestaurantListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantListViewController.swift; sourceTree = "<group>"; };
 		4555744E1BB6847100560CD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		455574501BB6847100560CD1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		455574531BB6847100560CD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		455574551BB6847100560CD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4571FFB21BB693DD000FBF62 /* YalpVars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YalpVars.swift; sourceTree = "<group>"; };
 		45D66C651BB6852E00519520 /* yalp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yalp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				455574491BB6847100560CD1 /* AppDelegate.swift */,
 				4555744D1BB6847100560CD1 /* Main.storyboard */,
 				455574501BB6847100560CD1 /* Assets.xcassets */,
-				455574521BB6847100560CD1 /* LaunchScreen.storyboard */,
 				455574551BB6847100560CD1 /* Info.plist */,
 				45D66C651BB6852E00519520 /* yalp-Bridging-Header.h */,
 			);
@@ -210,7 +207,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				455574541BB6847100560CD1 /* LaunchScreen.storyboard in Resources */,
 				455574511BB6847100560CD1 /* Assets.xcassets in Resources */,
 				4555744F1BB6847100560CD1 /* Main.storyboard in Resources */,
 			);
@@ -294,14 +290,6 @@
 				4555744E1BB6847100560CD1 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		455574521BB6847100560CD1 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				455574531BB6847100560CD1 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -395,6 +383,7 @@
 			baseConfigurationReference = 411650E8977024DBC583DAC6 /* Pods-yalp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = yalp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -410,6 +399,7 @@
 			baseConfigurationReference = 075064E89AC8A4C38B1F8A64 /* Pods-yalp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = yalp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

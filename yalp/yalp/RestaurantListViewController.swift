@@ -26,24 +26,31 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     var locationManager = CLLocationManager()
     var yalpClient : YalpClient!
     
+    // change in data should result in view refresh
     var restaurants : [Restaurant] = [] {
-        didSet {
-            self.searchBarFilteredRestaurants = restaurants
-        }
-    }
-    
-    var searchBarFilteredRestaurants : [Restaurant] = [] {
         didSet {
             self.restaurantTableView.reloadData()
         }
     }
     
-    var currentFilter : Filter.FilterSettings = Filter.FilterSettings() {
+    // change in search terms should trigger new fetch
+    var currentSearchTerms : [String] = [] {
         didSet {
-//            print("new filter!")
             self.fetchDataTask(currentFilter, newSearch: true)
+            // put the table scroll at the top
+            self.restaurantTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
     }
+
+    // change in filter should trigger new fetch
+    var currentFilter : Filter.FilterSettings = Filter.FilterSettings() {
+        didSet {
+            self.fetchDataTask(currentFilter, newSearch: true)
+            // put the table scroll at the top
+            self.restaurantTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+    }
+    
     
     var isFetchInProgress : Bool = false
     var currentQueryRowIndex : Int = 0
@@ -79,7 +86,8 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
             self.yalpClient = yalpClient
         }else{
             // show error
-            print("failed to load yalp client")
+            print("!failed to load yalp client")
+            // TODO: error
         }
         
         restaurantTableView.delegate = self
@@ -93,11 +101,11 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Restaurants"
-        
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
         self.navigationItem.titleView = searchController.searchBar
         searchController.hidesNavigationBarDuringPresentation = false
+        
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
         
@@ -161,26 +169,10 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
             }
         }
         
-        /*
-        // complicated logic to try and do search-as-type while also fetching new results
-        var category_filters : [String] = []
-        if let filters = filters {
-            category_filters = filters.filter({ YalpVars.condensedCategories[$0.lowercaseString]})
-            
-//            category_filters = filters.filter({ YalpVars.condensedCategories[$0.lowercaseString] != nil })
-//                .map{ YalpVars.condensedCategories[$0]! }
-            // extension isSubstring
-            category_filters = YalpVars.condensedCategories.filter({ (data: String) -> Bool in
-                return data.rangeOfString(})
-            filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
-                return dataString.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
-            })
+        var terms : String = "restaurants"
+        if self.currentSearchTerms.count > 0 {
+            terms = terms + "," + self.currentSearchTerms.joinWithSeparator(",")
         }
-        
-        if filters != nil && category_filters.count > 0 {
-            parameters["category_filter"] = category_filters.joinWithSeparator(",")
-        }
-        */
         
         if newSearch {
             self.currentQueryTotalRowCount = 0
@@ -192,16 +184,15 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
             parameters["offset"] = String(self.currentQueryRowIndex)
         }
         
-        
-        // always searching for restaurnts
-        self.yalpClient.searchWithTerm("restaurants", parameters: parameters,
+
+        // yalp go
+        self.yalpClient.searchWithTerm(terms, parameters: parameters,
             success: { (operation: AFHTTPRequestOperation!, responseObject: AnyObject!) in
                 let json = JSON(responseObject)
                 if let businesses = json["businesses"].array, let total=json["total"].int {
                     let newSet = businesses.map{ Restaurant(dict: $0.dictionaryValue) }
                     dispatch_async(dispatch_get_main_queue(), {
                         if !self.inTheMiddleOfQuery {
-                            print("resetting query!")
                             self.currentQueryTotalRowCount = total
                             self.currentQueryRowIndex = newSet.count
                             self.restaurants = newSet
@@ -233,25 +224,23 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return currentQueryTotalRowCount//searchBarFilteredRestaurants.count
-        return min(searchBarFilteredRestaurants.count, currentQueryRowIndex, currentQueryTotalRowCount)
+        return min(restaurants.count, currentQueryRowIndex, currentQueryTotalRowCount)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = restaurantTableView.dequeueReusableCellWithIdentifier("RestaurantListTableCellTableViewCell", forIndexPath: indexPath) as! RestaurantListTableCellTableViewCell
         
-        
         // check if more data needs to be fetched
         if currentQueryRowIndex < currentQueryTotalRowCount {
-            let limit = 0.75*Double(currentQueryRowIndex)
+            let limit = 0.60*Double(currentQueryRowIndex)
             if indexPath.row >= Int(limit) {
-                // fetch when 75% is shown
+                // fetch when 60% is shown
                 fetchDataTask(currentFilter, newSearch:false)
             }
         }
         
         cell.selectionStyle = .None
-        cell.restaurant = searchBarFilteredRestaurants[indexPath.row]
+        cell.restaurant = restaurants[indexPath.row]
 
         return cell
     }
@@ -266,11 +255,14 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
 
         if let text = searchText {
             if text.isEmpty {
-                searchBarFilteredRestaurants = restaurants
+                //restaurants = restaurants
+                self.currentSearchTerms = []
                 return
             }
         }
         
+        /*
+        // checks for the search terms in the restaurant name, or in the restaurant category set
         if let searchWords = searchText?.componentsSeparatedByString(" ") {
             if searchWords.count > 0 {
                 // for each restaurant
@@ -291,15 +283,13 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
                 })
             }
         }
-//        print(searchText)
-        
-        /*
-        filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
-            return dataString.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
-        })
-        
-        tableView.reloadData()
         */
+        if let currentSearchTerms = searchText?.componentsSeparatedByString(" ") {
+            if currentSearchTerms.count > 0 {
+                self.currentSearchTerms = currentSearchTerms
+            }
+        }
+        
     }
     
     /*
@@ -311,14 +301,11 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         print("search clicked: \(searchBar.text)")
     }
-
+    */
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        print("cancel clicked: \(searchBar.text)")
-        filteredRestaurants = restaurants
+        restaurantTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
-
-    */
     
     // MARK: Navigation Methods
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -335,7 +322,6 @@ class RestaurantlistViewController : UIViewController, UITableViewDelegate, UITa
         if let filter = filter {
             // new filter configured
             currentFilter = filter
-            restaurantTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
     }
 }
